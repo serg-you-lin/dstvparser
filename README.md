@@ -13,6 +13,10 @@ Allowing classification and sorting files based on detected features
 
 Modular structure: easy to extend or integrate into larger workflows
 
+Plotting profie faces with features with Matplotlib
+
+Exporting DFX files of profile faces
+
 ## Clone the repository:
 
 ```bash
@@ -20,11 +24,11 @@ git clone https://github.com/serg-you-lin/DSTVParser.git
 ```
 
 ## Requirements
-Python 3.9+
 
-No external dependencies (for now)
+- Python 3.9+
+- Required libraries listed in `requirements.txt`
 
-To install dependencies in the future:
+Install all dependencies with:
 
 ```bash
 pip install -r requirements.txt
@@ -32,7 +36,6 @@ pip install -r requirements.txt
 ## Development notes
 This project is under active development.
 Some features related to NC1 profiles are currently incomplete due to the lack of available sample files for proper development and testing. Contributions or example files are welcome to help expand support.
-Plotting and DXF export features will be added in the future.
 
 # How to Use
 ## Basic example
