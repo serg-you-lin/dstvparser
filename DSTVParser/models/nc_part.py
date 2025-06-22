@@ -24,7 +24,7 @@ class Slot:
     cc_distance: float
     height: float
     angle: float
-    lenght: float
+    length: float
     face: str  # 'o', 'u', 'v', 'h'
 
 @dataclass
@@ -62,10 +62,10 @@ class NCPart:
         self.holes: List[Hole] = []
         self.slots: List[Slot] = []
         self.notches: List[Notch] = []
-        self.o_contour: List[Tuple[float, float, float]] = []  # top flange
-        self.u_contour: List[Tuple[float, float, float]] = []  # bottom flange
-        self.v_contour: List[Tuple[float, float, float]] = []  # front web
-        self.h_contour: List[Tuple[float, float, float]] = []  # behind wer
+        self.o_contour: List[Tuple[float, float, float]] = []  
+        self.u_contour: List[Tuple[float, float, float]] = []  
+        self.v_contour: List[Tuple[float, float, float]] = []  
+        self.h_contour: List[Tuple[float, float, float]] = []  
 
     def add_hole(self, x: float, y: float, diameter: float, tipologia: float, face: str, 
                 hole_type: str = 'normal', depth: float = 0.0):

@@ -77,13 +77,20 @@ for profile_type, files in sets_by_type.items():
 
 You can find an example of such usage in:
 ```bash
-Examples/isolate_inclined_cuts.py
+isolate_skew_cuts.py
 ```
 This script:
 - Scans a folder containing .nc files
 -Parses each file using the NCFileParser
 -Checks for inclined flange/web cuts
 -Copies the file into either the Inclined cuts or Straights folder, accordingly
+
+You can also export dxf files from profile faces, and plotting them as well.
+Take a look on these examples:
+```bash
+plotting_faces.py
+dxf_exporter.py
+```
 
 ## License
 MIT License — feel free to use, modify, and share with attribution.

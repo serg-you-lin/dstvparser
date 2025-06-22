@@ -1,5 +1,5 @@
 from typing import List, Optional
-from .models.NCPart import NCPart
+from DSTVParser.models.nc_part import NCPart
 
 class DSTVFileParser:
     """Classe base per parser di file NC/NC1"""

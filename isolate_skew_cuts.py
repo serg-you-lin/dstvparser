@@ -1,6 +1,6 @@
 from pathlib import Path
 import shutil
-from DSTVParser import *
+from DSTVParser.parsers.factory import *
 
 # Cartella con i file NC
 folder = Path(r"Examples/files")

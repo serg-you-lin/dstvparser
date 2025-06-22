@@ -1,4 +1,4 @@
-from DSTVParser import *
+from DSTVParser.parsers.nc_file_parser import *
 
 file_path = r"Examples\553.nc"
 # file_path = r"Examples\722.nc"

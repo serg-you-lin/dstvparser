@@ -1,10 +1,11 @@
 from typing import List, Optional
 import re
 import os
-from .models.NCPart import *
-from .DSTVFileParser import DSTVFileParser
-from .utils.utilities import *
-from .utils.profile_schemas import PROFILE_SCHEMAS
+from DSTVParser.models.nc_part import *
+from DSTVParser.parsers.dstv_file_parser import DSTVFileParser
+from DSTVParser.utils.utilities import *
+from DSTVParser.utils.profile_schemas import PROFILE_SCHEMAS
+
 
 class NCFileParser(DSTVFileParser):
     """Parser per file NC standard"""
@@ -82,17 +83,19 @@ class NCFileParser(DSTVFileParser):
             profile_type = header_lines[7]
             self.log(f"Tipo di profilo: {profile_type}", section='header')
 
-            # Ottieni la struttura delle dimensioni per il file tipo e profilo
-            if file_type not in PROFILE_SCHEMAS or profile_type not in PROFILE_SCHEMAS[file_type]:
-                raise ValueError(f"Tipo di file o profilo non riconosciuto: {file_type}, {profile_type}")
-            
+            schema = PROFILE_SCHEMAS.get(profile_type)
+            if schema is None:
+                raise ValueError(f"Profilo '{profile_type}' non riconosciuto")
+        
+
             # Ottieni i nomi delle dimensioni e gli indici corrispondenti
-            param_names, param_indexes = PROFILE_SCHEMAS[file_type][profile_type]
+            fields = schema.get('fields', [])
+            indices = schema.get('indices', {}).get(file_type, [])
 
             # Crea dizionario dimensioni leggendo i valori dall’header
             dimensions = {
                 name: float(header_lines[idx].split(',')[0].strip())  # Pulisce valori tipo "1000,0"
-                for name, idx in zip(param_names, param_indexes)
+                for name, idx in zip(fields, indices)
             }
             
             self.current_profile = NCPart(
@@ -226,25 +229,24 @@ class NCFileParser(DSTVFileParser):
         pass  # Per ora ignoriamo le marcature
 
 
+if __name__ == '__main__':
+    base_dir = os.path.dirname(__file__) 
+    parent_dir = os.path.dirname(base_dir)
+    nc_path = os.path.join(parent_dir, "Examples", "UPN.nc")
 
-# if __name__ == '__main__':
-#     base_dir = os.path.dirname(__file__) 
-#     parent_dir = os.path.dirname(base_dir)
-#     nc_path = os.path.join(parent_dir, "Examples", "4026.nc")
-
-#     if os.path.exists(nc_path):
-#         print("File found!")
-#     else:
-#         print("File NOT found!")
+    if os.path.exists(nc_path):
+        print("File found!")
+    else:
+        print("File NOT found!")
         
-#     part_nc = NCFileParser(nc_path)
-#     profile = part_nc.parse()
-#     header = profile.get_header()
-#     print(header)
+    part_nc = NCFileParser(nc_path)
+    profile = part_nc.parse()
+    header = profile.get_header()
+    print(header)
 
-#     top_flange = profile.o_contour
-#     print(f"Top flange points: {top_flange}.")
+    top_flange = profile.o_contour
+    print(f"Top flange points: {top_flange}.")
 
-#     print("Dimensions: ", profile.dimensions)
+    print("Dimensions: ", profile.dimensions)
 
-#     print("Material: ", profile.material)
+    print("Material: ", profile.material)

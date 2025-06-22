@@ -1,10 +1,11 @@
 from typing import List, Optional
 import re
 import os
-from .DSTVFileParser import DSTVFileParser
-from .models.NCPart import NCPart
-from .utils.utilities import *
-from .utils.profile_schemas import PROFILE_SCHEMAS
+from DSTVParser.parsers.dstv_file_parser import DSTVFileParser
+from DSTVParser.models.nc_part import NCPart
+from DSTVParser.utils.utilities import *
+from DSTVParser.utils.profile_schemas import PROFILE_SCHEMAS
+
 
 class NC1FileParser(DSTVFileParser):
     """Parser per file NC1 con formato differente"""
@@ -79,19 +80,21 @@ class NC1FileParser(DSTVFileParser):
             
             file_type = 'NC1'
             profile_type = header_lines[8]
-            print('Profilo nc1', profile_type)           
+            self.log(f"Tipo di profilo: {profile_type}", section='header')          
             
-            # Ottieni la struttura delle dimensioni per il file tipo e profilo
-            if file_type not in PROFILE_SCHEMAS or profile_type not in PROFILE_SCHEMAS[file_type]:
-                raise ValueError(f"Tipo di file o profilo non riconosciuto: {file_type}, {profile_type}")
-            
+            schema = PROFILE_SCHEMAS.get(profile_type)
+            if schema is None:
+                raise ValueError(f"Profilo '{profile_type}' non riconosciuto")
+        
+
             # Ottieni i nomi delle dimensioni e gli indici corrispondenti
-            param_names, param_indexes = PROFILE_SCHEMAS[file_type][profile_type]
+            fields = schema.get('fields', [])
+            indices = schema.get('indices', {}).get(file_type, [])
 
             # Crea dizionario dimensioni leggendo i valori dall’header
             dimensions = {
                 name: float(header_lines[idx].split(',')[0].strip())  # Pulisce valori tipo "1000,0"
-                for name, idx in zip(param_names, param_indexes)
+                for name, idx in zip(fields, indices)
             }
 
             
@@ -209,3 +212,39 @@ class NC1FileParser(DSTVFileParser):
         """Gestisce le linee dopo SI (marcature)"""
         self.log(f"Ignorata linea SI: {line}")
         pass  # Per ora ignoriamo le marcature
+
+
+if __name__ == '__main__':
+    
+
+    base_dir = os.path.dirname(__file__) 
+    parent_dir = os.path.dirname(base_dir)
+    nc1_path = os.path.join(parent_dir, "Examples", "2501.nc1")
+
+    if os.path.exists(nc1_path):
+        print("File found!")
+    else:
+        print("File NOT found!")
+    
+        
+    part_nc1 = NC1FileParser(nc1_path)
+    profile = part_nc1.parse()
+    header = profile.get_header()
+    print(header)
+
+    print('Does profile have holes?? ', profile.has_holes())
+    print('Does profile have slots?? ', profile.has_slots())
+
+    print("Dimensions: ", profile.dimensions)
+
+    print("Material: ", profile.material)
+
+    top_flange = profile.o_contour
+    bottom_flange = profile.u_contour
+    front_web = profile.v_contour
+    behind_web = profile.h_contour
+
+    print(f"Top flange points: {top_flange}.")
+    print(f"Bottom flange points: {bottom_flange}.")
+    print(f"Front web points: {front_web}.")
+    print(f"Behind web points: {behind_web}.")

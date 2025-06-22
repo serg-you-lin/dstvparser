@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 
-from DSTVParser.NCFileParser import NCFileParser
+from DSTVParser.parsers.nc_file_parser import NCFileParser
 
 if __name__ == '__main__':
     base_dir = Path(__file__).resolve().parents[1]

@@ -2,11 +2,9 @@ import sys
 import os
 from pathlib import Path
 
-# Aggiungi la root del progetto ai path (per import assoluti)
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-
-from DSTVParser.NC1FileParser import NC1FileParser
+from DSTVParser.parsers.nc1_file_parser import NC1FileParser
 
 if __name__ == '__main__':
     base_dir = Path(__file__).resolve().parents[1]
@@ -23,13 +21,15 @@ if __name__ == '__main__':
     header = profile.get_header()
     print(header)
 
+    print('Tipologia profilo: ', profile.profile_type)
+
     print('Does profile have holes?? ', profile.has_holes())
     print('Does profile have slots?? ', profile.has_slots())
 
     print("Dimensions: ", profile.dimensions)
 
     print("Material: ", profile.material)
-
+    
     top_flange = profile.o_contour
     bottom_flange = profile.u_contour
     front_web = profile.v_contour

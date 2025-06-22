@@ -87,12 +87,13 @@ Desktop.ini
 
 # Images/tests/temp data
 *.png
-#*.jpg
+*.jpg
 *.jpeg
 *.gif
 *.csv
 *.xls
 #*.xlsx
+*.dxf
 
 # Backup files
 *~

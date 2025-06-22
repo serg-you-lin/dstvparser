@@ -1,5 +1,5 @@
 from pathlib import Path
-from DSTVParser import NCFileParser
+from DSTVParser.parsers.nc_file_parser import NCFileParser
 
 input_folder = Path("Examples/files")
 sets_by_type = {}

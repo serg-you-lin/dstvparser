@@ -1,21 +1,10 @@
+import sys
 import os
-from .NCFileParser import NCFileParser
-from .NC1FileParser import NC1FileParser
-from .DSTVFileParser import DSTVFileParser
+from pathlib import Path
 
-class NCFileParserFactory:
-    """Factory per creare il parser appropriato in base all'estensione del file"""
-    @staticmethod
-    def create_parser(filename: str) -> DSTVFileParser:
-        """Crea il parser appropriato in base all'estensione del file"""
-        if filename.lower().endswith('.nc'):
-            return NCFileParser(filename)
-        elif filename.lower().endswith('.nc1'):
-            return NC1FileParser(filename)
-        else:
-            raise ValueError(f"Formato file non supportato: {filename}")
-        
+sys.path.append(str(Path(__file__).resolve().parents[1]))
 
+from DSTVParser.parsers.factory import NCFileParserFactory
 
 if __name__ == '__main__':
     base_dir = os.path.dirname(__file__) 
@@ -35,11 +24,13 @@ if __name__ == '__main__':
     nc_part = NCFileParserFactory.create_parser(nc_path)
     nc_profile = nc_part.parse()
 
+    print('Profilo nc:')
     nc_header = nc_profile.get_header()
     print(nc_header)
 
     nc1_part = NCFileParserFactory.create_parser(nc1_path)
     nc1_profile = nc1_part.parse()
 
+    print('Profilo nc1:')
     nc1_header = nc1_profile.get_header()
     print(nc1_header)
