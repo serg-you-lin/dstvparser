@@ -2,7 +2,7 @@ from DSTVParser.exporters.profile_plotter import ProfilePlotter
 from DSTVParser.exporters.compose_profile_faces import ComposeProfileFaces
 from DSTVParser.parsers.nc_file_parser import *
 
-file_path = r"Examples\553.nc"
+file_path = r"Examples\722.nc"
 
 part_nc = NCFileParser(file_path)
 profile = part_nc.parse()

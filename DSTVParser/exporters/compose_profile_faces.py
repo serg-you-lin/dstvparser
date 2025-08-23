@@ -64,7 +64,39 @@ class ComposeProfileFaces:
             }
         
         return faces
-    
+
+    def _clamp_web_contour_if_needed(self, face_key: str, contour: list) -> list:
+        """
+        Se il profilo è di tipo I e la faccia è il web ('v'),
+        ritaglia il contorno eliminando le parti sopra/sotto le flange.
+        """
+        if not contour:
+            return []
+        
+        # Applichiamo solo ai profili I e solo al web
+        if self.profile_type.upper().startswith("I") and face_key == "v":
+            dims = self.part.dimensions
+            profile_height = dims.get("profile_height")
+            flange_thickness = dims.get("flange_thickness")
+        
+            
+            if profile_height and flange_thickness:
+                y_coords = [pt[1] for pt in contour]
+                min_y, max_y = min(y_coords), max(y_coords)
+
+                bottom_limit = min_y + flange_thickness
+                top_limit = max_y - flange_thickness
+
+                clamped = [
+                (pt[0], min(max(pt[1], bottom_limit), top_limit), pt[2] if len(pt) > 2 else 0)
+                for pt in contour
+                ]
+                
+                return clamped
+            
+        return list(contour)
+
+
     def get_available_faces(self):
         """
         Restituisce le chiavi delle facce disponibili per il profilo corrente.
@@ -94,8 +126,7 @@ class ComposeProfileFaces:
         # Prende le dimensioni del profilo
         web_height = self.part.dimensions.get('web_height', 300)
         flange_width = self.part.dimensions.get('flange_width', 300)
-        print(2*-flange_width - 100)
-        print(3*-flange_width - 100)
+        
         length = self.part.length
 
         face_heights = {
@@ -110,7 +141,7 @@ class ComposeProfileFaces:
 
         for face_key in ['o', 'u', 'v', 'h']:
             self.offsets[face_key] = (0, y_cursor)
-            y_cursor -= face_heights[face_key] + 100  # 100 = spazio tra le facce
+            y_cursor -= face_heights[face_key] + 0 
         
     def get_offsets(self):
         """Restituisce gli offset calcolati per le facce"""
@@ -127,13 +158,22 @@ class ComposeProfileFaces:
             'h': getattr(self.part, 'h_contour', [])
         }
         
-        # Aggiunge i contorni solo per le facce definite nello schema
+        # # Aggiunge i contorni solo per le facce definite nello schema
+        # for face_key in self.faces.keys():
+        #     if face_key in part_contours:
+        #         self.faces[face_key]['contour'] = part_contours[face_key]
+        #     else:
+        #         print(f"Warning: Contorno per faccia '{face_key}' non trovato nell'NCPart")
+        
         for face_key in self.faces.keys():
             if face_key in part_contours:
-                self.faces[face_key]['contour'] = part_contours[face_key]
+                raw_contour = part_contours[face_key]
+                self.faces[face_key]['contour'] = self._clamp_web_contour_if_needed(face_key, raw_contour)
             else:
+                self.faces[face_key]['contour'] = []
                 print(f"Warning: Contorno per faccia '{face_key}' non trovato nell'NCPart")
-        
+
+
         # Aggiungi fori alle rispettive facce
         for hole in self.part.holes:
             if hole.face in self.faces:

@@ -9,4 +9,3 @@ def convert_to_float(value: str) -> float:
     #     print(f"Rimuovo la lettera finale: {value[-1]}, valore pulito: {cleaned_value}")
     return float(cleaned_value)
 
-
