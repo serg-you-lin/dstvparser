@@ -88,10 +88,11 @@ This script:
 -Checks for inclined flange/web cuts
 -Copies the file into either the Inclined cuts or Straights folder, accordingly
 
-You can also export dxf files from profile faces, and plotting them as well.
+You can export dxf files from profile faces, and plotting them as well. New implementation of interactive plotting (measurement allowed)
 Take a look on these examples:
 ```bash
 plotting_faces.py
+interactive_plotting.py
 dxf_exporter.py
 ```
 
