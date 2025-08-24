@@ -5,10 +5,11 @@ from DSTVParser.utils.profile_schemas import PROFILE_SCHEMAS
 class ComposeProfileFaces:
     """Classe per convertire un oggetto NCPart in facce plottabili"""
     
-    def __init__(self, nc_part):
+    def __init__(self, nc_part, offset_between_faces: float = 0):
         """Inizializza con un oggetto NCPart"""
         self.part = nc_part
         self.profile_type = nc_part.profile_type
+        self
         
         # Colori predefiniti per le facce
         self.face_colors = {
@@ -25,7 +26,7 @@ class ComposeProfileFaces:
         self.faces = self._initialize_faces()
         
         # Calcola gli offset predefiniti per il posizionamento delle facce
-        self.calc_default_offsets()
+        self.calc_default_offsets(offset_between_faces=offset_between_faces)
         
         # Compone le facce
         self.compose_faces()
@@ -121,7 +122,7 @@ class ComposeProfileFaces:
         return max(y_coords) - min(y_coords)
 
 
-    def calc_default_offsets(self):
+    def calc_default_offsets(self, offset_between_faces):
         """Calcola gli offset predefiniti per le facce"""
         # Prende le dimensioni del profilo
         web_height = self.part.dimensions.get('web_height', 300)
@@ -141,7 +142,7 @@ class ComposeProfileFaces:
 
         for face_key in ['o', 'u', 'v', 'h']:
             self.offsets[face_key] = (0, y_cursor)
-            y_cursor -= face_heights[face_key] + 0 
+            y_cursor -= offset_between_faces
         
     def get_offsets(self):
         """Restituisce gli offset calcolati per le facce"""
@@ -157,14 +158,8 @@ class ComposeProfileFaces:
             'v': getattr(self.part, 'v_contour', []),
             'h': getattr(self.part, 'h_contour', [])
         }
-        
-        # # Aggiunge i contorni solo per le facce definite nello schema
-        # for face_key in self.faces.keys():
-        #     if face_key in part_contours:
-        #         self.faces[face_key]['contour'] = part_contours[face_key]
-        #     else:
-        #         print(f"Warning: Contorno per faccia '{face_key}' non trovato nell'NCPart")
-        
+
+        # Aggiungi contorni alle rispettive facce
         for face_key in self.faces.keys():
             if face_key in part_contours:
                 raw_contour = part_contours[face_key]

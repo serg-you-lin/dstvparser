@@ -5,7 +5,7 @@ import os
 
 
 file_path = r"Examples\issue#1.nc1"
-file_path = r"Examples\2519.nc1"
+# file_path = r"Examples\2519.nc1"
 
 part_nc = NCFileParserFactory.create_parser(file_path)
 profile = part_nc.parse()
@@ -14,7 +14,7 @@ profile = part_nc.parse()
 folder_path = file_path.rsplit('\\', 1)[0]  
 
 # Generate profile faces
-profile_faces = ComposeProfileFaces(profile)
+profile_faces = ComposeProfileFaces(profile, offset_between_faces=000)
 
 # Create dxf exporter instance
 exporter = ProfileDXFExporter(profile_faces)
@@ -28,7 +28,7 @@ else:
 
 
 # Esporting all faces to a DXF file (with face names as labels)
-output_file = exporter.export_all_faces(os.path.join(folder_path, output_file_name), separate_files=True, add_labels=True)
+output_file = exporter.export_all_faces(os.path.join(folder_path, output_file_name), separate_files=False, add_labels=True)
 print(f"File DXF completo generato: {output_file}")
 
 # Exporting a specific face to a DXF file
