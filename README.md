@@ -84,14 +84,17 @@ isolate_skew_cuts.py
 ```
 This script:
 - Scans a folder containing .nc files
--Parses each file using the NCFileParser
--Checks for inclined flange/web cuts
--Copies the file into either the Inclined cuts or Straights folder, accordingly
+- Parses each file using the NCFileParser
+- Checks for inclined flange/web cuts
+- Copies the file into either the Inclined cuts or Straights folder, accordingly,  
+  allowing for organized separation and easier management of files based on their geometric features for further processing or review.
 
-You can also export dxf files from profile faces, and plotting them as well.
+## Exporting
+You can export dxf files from profile faces, and plotting them as well. New implementation of interactive plotting (measurement allowed)
 Take a look on these examples:
 ```bash
 plotting_faces.py
+interactive_plotting.py
 dxf_exporter.py
 ```
 
