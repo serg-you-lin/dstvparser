@@ -3,8 +3,8 @@ from DSTVParser.exporters.compose_profile_faces import ComposeProfileFaces
 from DSTVParser.parsers.factory import NCFileParserFactory
 from DSTVParser.parsers.nc_file_parser import *
 
-file_path = r"Examples\2519.nc1"
-#file_path = r"Examples\Issue#1.nc1"
+#file_path = r"Examples\2519.nc1"
+file_path = r"Examples\505_Incastro_N°14 pz.nc"
 
 part_nc = NCFileParserFactory.create_parser(file_path)
 profile = part_nc.parse()
