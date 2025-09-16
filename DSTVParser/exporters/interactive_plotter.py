@@ -18,9 +18,10 @@ class MeasurementTool:
 class InteractiveProfilePlotter:
     """Classe per visualizzare le facce di un profilo con interattività matplotlib"""
     
-    def __init__(self, profile_faces):
+    def __init__(self, profile_faces, y_plot_lim=50):
         """Inizializza con un oggetto ComposeProfileFaces"""
         self.profile_faces = profile_faces
+        self.y_plot_lim = y_plot_lim
         
         # Mappa dei colori matplotlib per le facce
         self.color_map = {
@@ -479,7 +480,7 @@ class InteractiveProfilePlotter:
         ax.grid(True, linestyle='--', alpha=0.7)
         ax.set_aspect('equal')
 
-        ax.set_ylim(ax.get_ylim()[0] - 20, ax.get_ylim()[1] + 20)   
+        ax.set_ylim(ax.get_ylim()[0] - self.y_plot_lim, ax.get_ylim()[1] + self.y_plot_lim)   
     
     def _draw_contour(self, face_data, ax, color):
         contour = face_data['contour']
