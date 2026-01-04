@@ -1,14 +1,9 @@
-import sys
-import os
 from pathlib import Path
-
-sys.path.append(str(Path(__file__).resolve().parents[1]))
-
-from DSTVParser.parsers.nc1_file_parser import NC1FileParser
+from dstvparser.parsers.nc1_file_parser import NC1FileParser
 
 if __name__ == '__main__':
-    base_dir = Path(__file__).resolve().parents[1]
-    nc1_path = base_dir / "Examples" / "2501.nc1"
+    data_dir = Path(__file__).parent / "data"
+    nc1_path = data_dir / "2501.nc1"
 
     if nc1_path.exists():
         print("File found!")

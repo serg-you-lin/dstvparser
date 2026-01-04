@@ -13,10 +13,6 @@ Allowing classification and sorting files based on detected features
 
 Modular structure: easy to extend or integrate into larger workflows
 
-Plotting profie faces with features with Matplotlib
-
-Exporting DFX files of profile faces
-
 ## Clone the repository:
 
 ```bash
@@ -26,13 +22,7 @@ git clone https://github.com/serg-you-lin/DSTVParser.git
 ## Requirements
 
 - Python 3.9+
-- Required libraries listed in `requirements.txt`
 
-Install all dependencies with:
-
-```bash
-pip install -r requirements.txt
-```
 ## Development notes
 This project is under active development.
 Some features related to NC1 profiles are currently incomplete due to the lack of available sample files for proper development and testing. Contributions or example files are welcome to help expand support.
@@ -48,7 +38,6 @@ profile = parser.parse()
 
 print(profile.get_header())
 ```
-For a complete example, see RunExample.py.
 
 ## Example use case: Split Profiles by feature
 One common use case is to split NC profiles based on profile type or specific geometric characteristics, such as the presence of holes or inclined cuts.
@@ -78,10 +67,6 @@ for profile_type, files in sets_by_type.items():
     print(f"{profile_type}:", len(files))
 ```
 
-You can find an example of such usage in:
-```bash
-isolate_skew_cuts.py
-```
 This script:
 - Scans a folder containing .nc files
 - Parses each file using the NCFileParser
@@ -89,14 +74,8 @@ This script:
 - Copies the file into either the Inclined cuts or Straights folder, accordingly,  
   allowing for organized separation and easier management of files based on their geometric features for further processing or review.
 
-## Exporting
-You can export dxf files from profile faces, and plotting them as well. New implementation of interactive plotting (measurement allowed)
-Take a look on these examples:
-```bash
-plotting_faces.py
-interactive_plotting.py
-dxf_exporter.py
-```
+## Inspection scripts
+"exaples" folder contains manual inspections scripts used during the develop. They are not automatic tests.
 
 ## License
 MIT License — feel free to use, modify, and share with attribution.

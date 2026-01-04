@@ -1,10 +1,10 @@
 from typing import List, Optional
 import re
 import os
-from DSTVParser.parsers.dstv_file_parser import DSTVFileParser
-from DSTVParser.models.nc_part import NCPart
-from DSTVParser.utils.utilities import *
-from DSTVParser.utils.profile_schemas import PROFILE_SCHEMAS
+from dstvparser.parsers.dstv_file_parser import DSTVFileParser
+from dstvparser.models.nc_part import NCPart
+from dstvparser.utils.utilities import *
+from dstvparser.utils.profile_schemas import PROFILE_SCHEMAS
 
 
 class NC1FileParser(DSTVFileParser):

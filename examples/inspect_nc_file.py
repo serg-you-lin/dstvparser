@@ -1,16 +1,9 @@
-import sys
-import os
 from pathlib import Path
-
-# Aggiungi la root del progetto ai path (per import assoluti)
-sys.path.append(str(Path(__file__).resolve().parents[1]))
-
-
-from DSTVParser.parsers.nc_file_parser import NCFileParser
+from dstvparser.parsers.nc_file_parser import NCFileParser
 
 if __name__ == '__main__':
-    base_dir = Path(__file__).resolve().parents[1]
-    nc_path = base_dir / "Examples" / "Rectangular tube.nc"
+    data_dir = Path(__file__).parent / "data"
+    nc_path = data_dir /"516_AK_test_UPN 200.nc_N°8 pz.nc"
 
     if nc_path.exists():
         print("File found!")

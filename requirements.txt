@@ -1,2 +1,0 @@
-matplotlib>=3.5
-ezdxf>=1.0

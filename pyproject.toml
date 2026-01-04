@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dstv-parser"
+version = "0.1.0"
+description = "DSTV file parser (core library)"
+authors = [
+    { name="Federico Sidraschi" }
+]
+readme = "README.md"
+requires-python = ">=3.9"
+
+dependencies = []
+
+keywords = [
+    "DSTV",
+    "dstv",
+    "tekla",
+    "advance steel",
+    "parsing",
+    "automation",
+    "batch-processing",
+    "manufacturing",
+    "cnc",
+    "cam",
+    "design-automation",
+    "cad-automation",
+    "technical-drawing",
+    "mechanical-design",
+    "steel profiles",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "ruff"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
