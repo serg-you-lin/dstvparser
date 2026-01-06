@@ -1,6 +1,6 @@
-# DSTV Parser
+# dstvparser
 
-DSTV Parser is a Python library for parsing and analyzing DSTV files commonly used in the structural steel industry.  
+dstvparser is a Python library for parsing and analyzing DSTV files commonly used in the structural steel industry.  
 It allows easy extraction of profile information, detection of inclined cuts, and basic automation of file classification.
 
 ## Features
@@ -16,7 +16,7 @@ It allows easy extraction of profile information, detection of inclined cuts, an
 ## Clone the repository:
 
 ```bash
-git clone https://github.com/serg-you-lin/DSTVParser.git
+git clone https://github.com/serg-you-lin/dstvparser.git
 ```
 
 ## Requirements
