@@ -1,1 +1,1 @@
-from dstvparser.parsers.dstv_file_parser import DSTVFileParser
+from .parsers.dstv_file_parser import DSTVFileParser
